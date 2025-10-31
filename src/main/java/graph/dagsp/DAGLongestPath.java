@@ -53,7 +53,7 @@ public class DAGLongestPath {
         public final int[] pre;
         public Result(long[] dist, int[] pre) { this.dist = dist; this.pre = pre; }
 
-        public Optional<Path> reconstructAnyLongest() {
+        public Optional<SPPath> reconstructAnyLongest() {
             int n = dist.length;
             long best = Long.MIN_VALUE;
             int bestIdx = -1;
@@ -64,7 +64,7 @@ public class DAGLongestPath {
             LinkedList<Integer> ls = new LinkedList<>();
             int cur = bestIdx;
             while (cur != -1) { ls.addFirst(cur); cur = pre[cur]; }
-            return Optional.of(new Path(ls, best));
+            return Optional.of(new SPPath(ls, best));
         }
     }
 }

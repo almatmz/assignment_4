@@ -1,0 +1,103 @@
+[ {
+  "density" : 1.08,
+  "topo" : {
+    "valid" : true,
+    "time_ms" : 2,
+    "pushes" : 25,
+    "pops" : 25
+  },
+  "shortest_path" : {
+    "example" : {
+      "path" : [ 24, 23, 22, 21, 20, 19, 18, 17, 16, 4, 3, 2, 1, 0 ],
+      "distance" : 21
+    },
+    "time_ms" : 1,
+    "relaxations" : 27,
+    "reachable" : 25,
+    "avg_distance" : 11.0
+  },
+  "longest_path" : {
+    "critical_path" : [ 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 ],
+    "relaxations" : 27,
+    "critical_length" : 36,
+    "time_ms" : 2
+  },
+  "m" : 27,
+  "graph" : "large1.json",
+  "n" : 25,
+  "scc" : {
+    "dfs_edges" : 27,
+    "dfs_visits" : 25,
+    "time_ms" : 4,
+    "avg_size" : 1.0,
+    "count" : 25
+  }
+}, {
+  "density" : 1.2,
+  "topo" : {
+    "valid" : true,
+    "time_ms" : 0,
+    "pushes" : 30,
+    "pops" : 30
+  },
+  "shortest_path" : {
+    "example" : {
+      "path" : [ 29, 24, 22, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 ],
+      "distance" : 27
+    },
+    "time_ms" : 0,
+    "relaxations" : 36,
+    "reachable" : 30,
+    "avg_distance" : 10.433333333333334
+  },
+  "longest_path" : {
+    "critical_path" : [ 29, 24, 22, 21, 20, 19, 18, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 ],
+    "relaxations" : 36,
+    "critical_length" : 34,
+    "time_ms" : 0
+  },
+  "m" : 36,
+  "graph" : "large2.json",
+  "n" : 30,
+  "scc" : {
+    "dfs_edges" : 36,
+    "dfs_visits" : 30,
+    "time_ms" : 0,
+    "avg_size" : 1.0,
+    "count" : 30
+  }
+}, {
+  "density" : 1.0909090909090908,
+  "topo" : {
+    "valid" : true,
+    "time_ms" : 0,
+    "pushes" : 16,
+    "pops" : 16
+  },
+  "shortest_path" : {
+    "example" : {
+      "path" : [ 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 ],
+      "distance" : 23
+    },
+    "time_ms" : 0,
+    "relaxations" : 15,
+    "reachable" : 16,
+    "avg_distance" : 12.1875
+  },
+  "longest_path" : {
+    "critical_path" : [ 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 ],
+    "relaxations" : 15,
+    "critical_length" : 23,
+    "time_ms" : 0
+  },
+  "m" : 24,
+  "graph" : "large3.json",
+  "n" : 22,
+  "scc" : {
+    "dfs_edges" : 24,
+    "dfs_visits" : 22,
+    "time_ms" : 0,
+    "avg_size" : 1.375,
+    "count" : 16
+  }
+} ]
