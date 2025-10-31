@@ -21,7 +21,6 @@ public class Metrics {
             timers.computeIfAbsent(label, k -> new AtomicLong()).addAndGet(elapsed);
         }
     }
-    public long timeGet(String label) { return timers.getOrDefault(label, new AtomicLong(0)).get(); }
 
     @Override
     public String toString() {

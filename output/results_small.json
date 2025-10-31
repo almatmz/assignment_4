@@ -1,103 +1,109 @@
 [ {
-  "density" : 0.8333333333333334,
-  "topo" : {
-    "valid" : true,
-    "time_ms" : 0,
-    "pushes" : 6,
-    "pops" : 6
-  },
-  "shortest_path" : {
-    "example" : {
-      "path" : [ 5, 4, 3, 2, 1, 0 ],
-      "distance" : 9
-    },
-    "time_ms" : 0,
-    "relaxations" : 5,
-    "reachable" : 6,
-    "avg_distance" : 4.0
-  },
-  "longest_path" : {
-    "critical_path" : [ 5, 4, 3, 2, 1, 0 ],
-    "relaxations" : 5,
-    "critical_length" : 9,
-    "time_ms" : 0
-  },
-  "m" : 5,
-  "graph" : "small1.json",
-  "n" : 6,
-  "scc" : {
-    "dfs_edges" : 5,
+  "file" : "small1.json",
+  "nodes" : 6,
+  "edges" : 6,
+  "density" : 1.0,
+  "SCC" : {
     "dfs_visits" : 6,
     "time_ms" : 0,
-    "avg_size" : 1.0,
-    "count" : 6
+    "condensed_nodes" : 6,
+    "components" : [ [ 5 ], [ 4 ], [ 2 ], [ 3 ], [ 1 ], [ 0 ] ],
+    "dfs_edges" : 6,
+    "component_count" : 6,
+    "avg_component_size" : 1.0
+  },
+  "Topological_Order" : {
+    "order" : [ 5, 4, 2, 3, 1, 0 ],
+    "push_ops" : 6,
+    "pop_ops" : 6,
+    "time_ms" : 0,
+    "valid_dag" : true
+  },
+  "Shortest_Path" : {
+    "relax_ops" : 6,
+    "time_ms" : 0,
+    "best_distance" : 7,
+    "avg_distance" : 4.0,
+    "best_path" : [ 5, 4, 2, 1, 0 ],
+    "source_component" : 5,
+    "reachable_nodes" : 6
+  },
+  "Longest_Path" : {
+    "critical_length" : 9,
+    "critical_path" : [ 5, 4, 3, 1, 0 ],
+    "relax_ops" : 6,
+    "time_ms" : 0
   }
 }, {
+  "file" : "small2.json",
+  "nodes" : 7,
+  "edges" : 7,
   "density" : 1.0,
-  "topo" : {
-    "valid" : true,
-    "time_ms" : 0,
-    "pushes" : 5,
-    "pops" : 5
-  },
-  "shortest_path" : {
-    "example" : {
-      "path" : [ 3, 2, 1, 0 ],
-      "distance" : 6
-    },
-    "time_ms" : 0,
-    "relaxations" : 3,
-    "reachable" : 4,
-    "avg_distance" : 3.25
-  },
-  "longest_path" : {
-    "critical_path" : [ 3, 2, 1, 0 ],
-    "relaxations" : 3,
-    "critical_length" : 6,
-    "time_ms" : 0
-  },
-  "m" : 7,
-  "graph" : "small2.json",
-  "n" : 7,
-  "scc" : {
-    "dfs_edges" : 7,
+  "SCC" : {
     "dfs_visits" : 7,
     "time_ms" : 0,
-    "avg_size" : 1.4,
-    "count" : 5
+    "condensed_nodes" : 5,
+    "components" : [ [ 6 ], [ 5 ], [ 4 ], [ 3 ], [ 2, 1, 0 ] ],
+    "dfs_edges" : 7,
+    "component_count" : 5,
+    "avg_component_size" : 1.4
+  },
+  "Topological_Order" : {
+    "order" : [ 4, 3, 2, 1, 0 ],
+    "push_ops" : 5,
+    "pop_ops" : 5,
+    "time_ms" : 0,
+    "valid_dag" : true
+  },
+  "Shortest_Path" : {
+    "relax_ops" : 3,
+    "time_ms" : 0,
+    "best_distance" : 6,
+    "avg_distance" : 3.25,
+    "best_path" : [ 3, 2, 1, 0 ],
+    "source_component" : 3,
+    "reachable_nodes" : 4
+  },
+  "Longest_Path" : {
+    "critical_length" : 6,
+    "critical_path" : [ 3, 2, 1, 0 ],
+    "relax_ops" : 3,
+    "time_ms" : 0
   }
 }, {
-  "density" : 1.125,
-  "topo" : {
-    "valid" : true,
-    "time_ms" : 0,
-    "pushes" : 5,
-    "pops" : 5
-  },
-  "shortest_path" : {
-    "example" : {
-      "path" : [ 4, 3, 2, 1, 0 ],
-      "distance" : 7
-    },
-    "time_ms" : 0,
-    "relaxations" : 4,
-    "reachable" : 5,
-    "avg_distance" : 4.0
-  },
-  "longest_path" : {
-    "critical_path" : [ 4, 3, 2, 1, 0 ],
-    "relaxations" : 4,
-    "critical_length" : 7,
-    "time_ms" : 0
-  },
-  "m" : 9,
-  "graph" : "small3.json",
-  "n" : 8,
-  "scc" : {
-    "dfs_edges" : 9,
+  "file" : "small3.json",
+  "nodes" : 8,
+  "edges" : 8,
+  "density" : 1.0,
+  "SCC" : {
     "dfs_visits" : 8,
     "time_ms" : 0,
-    "avg_size" : 1.6,
-    "count" : 5
+    "condensed_nodes" : 5,
+    "components" : [ [ 7 ], [ 6 ], [ 5 ], [ 2, 1, 0 ], [ 4, 3 ] ],
+    "dfs_edges" : 8,
+    "component_count" : 5,
+    "avg_component_size" : 1.6
+  },
+  "Topological_Order" : {
+    "order" : [ 3, 4, 2, 1, 0 ],
+    "push_ops" : 5,
+    "pop_ops" : 5,
+    "time_ms" : 0,
+    "valid_dag" : true
+  },
+  "Shortest_Path" : {
+    "relax_ops" : 2,
+    "time_ms" : 0,
+    "best_distance" : 4,
+    "avg_distance" : 2.3333333333333335,
+    "best_path" : [ 2, 1, 0 ],
+    "source_component" : 2,
+    "reachable_nodes" : 3
+  },
+  "Longest_Path" : {
+    "critical_length" : 4,
+    "critical_path" : [ 2, 1, 0 ],
+    "relax_ops" : 2,
+    "time_ms" : 0
   }
 } ]

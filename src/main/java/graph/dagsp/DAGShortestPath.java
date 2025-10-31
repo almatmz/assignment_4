@@ -28,7 +28,6 @@ public class DAGShortestPath {
         Arrays.fill(pre, -1);
 
         dist[source] = 0;
-        // position map to iterate nodes in topo order
         int[] pos = new int[n];
         for (int i = 0; i < n; i++) pos[order.get(i)] = i;
 

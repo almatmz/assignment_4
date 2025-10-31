@@ -16,7 +16,7 @@ public class TarjanSCC {
     private final boolean[] onStack;
     private final Deque<Integer> stack = new ArrayDeque<>();
     private final List<List<Integer>> components = new ArrayList<>();
-    private final int[] compOf; // mapping vertex -> component id
+    private final int[] compOf;
 
     public TarjanSCC(Graph g, Metrics metrics) {
         this.g = g;

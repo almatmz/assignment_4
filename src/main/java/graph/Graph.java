@@ -12,7 +12,7 @@ public class Graph {
     private final int n;
     private final List<List<Edge>> adj;
     private int source = -1;
-    private String weightModel = "edge"; // "edge" or "node"
+    private String weightModel = "edge";
 
     public Graph(int n) {
         this.n = n;
