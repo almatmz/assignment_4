@@ -1,0 +1,103 @@
+[ {
+  "density" : 1.1666666666666667,
+  "topo" : {
+    "valid" : true,
+    "time_ms" : 0,
+    "pushes" : 8,
+    "pops" : 8
+  },
+  "shortest_path" : {
+    "example" : {
+      "path" : [ 7, 6, 5, 4, 3, 2, 1, 0 ],
+      "distance" : 11
+    },
+    "time_ms" : 0,
+    "relaxations" : 7,
+    "reachable" : 8,
+    "avg_distance" : 6.625
+  },
+  "longest_path" : {
+    "critical_path" : [ 7, 6, 5, 4, 3, 2, 1, 0 ],
+    "relaxations" : 7,
+    "critical_length" : 11,
+    "time_ms" : 0
+  },
+  "m" : 14,
+  "graph" : "medium1.json",
+  "n" : 12,
+  "scc" : {
+    "dfs_edges" : 14,
+    "dfs_visits" : 12,
+    "time_ms" : 0,
+    "avg_size" : 1.5,
+    "count" : 8
+  }
+}, {
+  "density" : 1.2142857142857142,
+  "topo" : {
+    "valid" : true,
+    "time_ms" : 0,
+    "pushes" : 14,
+    "pops" : 14
+  },
+  "shortest_path" : {
+    "example" : {
+      "path" : [ 13, 9, 8, 7, 6, 3, 2, 0 ],
+      "distance" : 10
+    },
+    "time_ms" : 0,
+    "relaxations" : 17,
+    "reachable" : 14,
+    "avg_distance" : 4.5
+  },
+  "longest_path" : {
+    "critical_path" : [ 13, 10, 8, 5, 4, 3, 1, 0 ],
+    "relaxations" : 17,
+    "critical_length" : 15,
+    "time_ms" : 0
+  },
+  "m" : 17,
+  "graph" : "medium2.json",
+  "n" : 14,
+  "scc" : {
+    "dfs_edges" : 17,
+    "dfs_visits" : 14,
+    "time_ms" : 0,
+    "avg_size" : 1.0,
+    "count" : 14
+  }
+}, {
+  "density" : 1.0666666666666667,
+  "topo" : {
+    "valid" : true,
+    "time_ms" : 0,
+    "pushes" : 12,
+    "pops" : 12
+  },
+  "shortest_path" : {
+    "example" : {
+      "path" : [ 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 ],
+      "distance" : 16
+    },
+    "time_ms" : 0,
+    "relaxations" : 11,
+    "reachable" : 12,
+    "avg_distance" : 7.083333333333333
+  },
+  "longest_path" : {
+    "critical_path" : [ 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 ],
+    "relaxations" : 11,
+    "critical_length" : 16,
+    "time_ms" : 0
+  },
+  "m" : 16,
+  "graph" : "medium3.json",
+  "n" : 15,
+  "scc" : {
+    "dfs_edges" : 16,
+    "dfs_visits" : 15,
+    "time_ms" : 0,
+    "avg_size" : 1.25,
+    "count" : 12
+  }
+} ]

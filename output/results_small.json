@@ -1,0 +1,103 @@
+[ {
+  "density" : 0.8333333333333334,
+  "topo" : {
+    "valid" : true,
+    "time_ms" : 0,
+    "pushes" : 6,
+    "pops" : 6
+  },
+  "shortest_path" : {
+    "example" : {
+      "path" : [ 5, 4, 3, 2, 1, 0 ],
+      "distance" : 9
+    },
+    "time_ms" : 0,
+    "relaxations" : 5,
+    "reachable" : 6,
+    "avg_distance" : 4.0
+  },
+  "longest_path" : {
+    "critical_path" : [ 5, 4, 3, 2, 1, 0 ],
+    "relaxations" : 5,
+    "critical_length" : 9,
+    "time_ms" : 0
+  },
+  "m" : 5,
+  "graph" : "small1.json",
+  "n" : 6,
+  "scc" : {
+    "dfs_edges" : 5,
+    "dfs_visits" : 6,
+    "time_ms" : 0,
+    "avg_size" : 1.0,
+    "count" : 6
+  }
+}, {
+  "density" : 1.0,
+  "topo" : {
+    "valid" : true,
+    "time_ms" : 0,
+    "pushes" : 5,
+    "pops" : 5
+  },
+  "shortest_path" : {
+    "example" : {
+      "path" : [ 3, 2, 1, 0 ],
+      "distance" : 6
+    },
+    "time_ms" : 0,
+    "relaxations" : 3,
+    "reachable" : 4,
+    "avg_distance" : 3.25
+  },
+  "longest_path" : {
+    "critical_path" : [ 3, 2, 1, 0 ],
+    "relaxations" : 3,
+    "critical_length" : 6,
+    "time_ms" : 0
+  },
+  "m" : 7,
+  "graph" : "small2.json",
+  "n" : 7,
+  "scc" : {
+    "dfs_edges" : 7,
+    "dfs_visits" : 7,
+    "time_ms" : 0,
+    "avg_size" : 1.4,
+    "count" : 5
+  }
+}, {
+  "density" : 1.125,
+  "topo" : {
+    "valid" : true,
+    "time_ms" : 0,
+    "pushes" : 5,
+    "pops" : 5
+  },
+  "shortest_path" : {
+    "example" : {
+      "path" : [ 4, 3, 2, 1, 0 ],
+      "distance" : 7
+    },
+    "time_ms" : 0,
+    "relaxations" : 4,
+    "reachable" : 5,
+    "avg_distance" : 4.0
+  },
+  "longest_path" : {
+    "critical_path" : [ 4, 3, 2, 1, 0 ],
+    "relaxations" : 4,
+    "critical_length" : 7,
+    "time_ms" : 0
+  },
+  "m" : 9,
+  "graph" : "small3.json",
+  "n" : 8,
+  "scc" : {
+    "dfs_edges" : 9,
+    "dfs_visits" : 8,
+    "time_ms" : 0,
+    "avg_size" : 1.6,
+    "count" : 5
+  }
+} ]

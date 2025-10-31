@@ -2,11 +2,11 @@ package graph.dagsp;
 
 import java.util.*;
 
-public class Path {
+public class SPPath {
     private final List<Integer> nodes;
     private final long dist;
 
-    public Path(List<Integer> nodes, long dist) {
+    public SPPath(List<Integer> nodes, long dist) {
         this.nodes = nodes;
         this.dist = dist;
     }

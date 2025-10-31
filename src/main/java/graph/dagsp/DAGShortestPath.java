@@ -51,12 +51,12 @@ public class DAGShortestPath {
         public final long[] dist;
         public final int[] pre;
         public Result(long[] dist, int[] pre) { this.dist = dist; this.pre = pre; }
-        public Optional<Path> reconstructPath(int src, int tgt) {
+        public Optional<SPPath> reconstructPath(int src, int tgt) {
             if (dist[tgt] == Long.MAX_VALUE/4) return Optional.empty();
             LinkedList<Integer> ls = new LinkedList<>();
             int cur = tgt;
             while (cur != -1) { ls.addFirst(cur); if (cur == src) break; cur = pre[cur]; }
-            return Optional.of(new Path(ls, dist[tgt]));
+            return Optional.of(new SPPath(ls, dist[tgt]));
         }
     }
 }
