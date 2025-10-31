@@ -1,103 +1,109 @@
 [ {
-  "density" : 1.1666666666666667,
-  "topo" : {
-    "valid" : true,
-    "time_ms" : 0,
-    "pushes" : 8,
-    "pops" : 8
-  },
-  "shortest_path" : {
-    "example" : {
-      "path" : [ 7, 6, 5, 4, 3, 2, 1, 0 ],
-      "distance" : 11
-    },
-    "time_ms" : 0,
-    "relaxations" : 7,
-    "reachable" : 8,
-    "avg_distance" : 6.625
-  },
-  "longest_path" : {
-    "critical_path" : [ 7, 6, 5, 4, 3, 2, 1, 0 ],
-    "relaxations" : 7,
-    "critical_length" : 11,
-    "time_ms" : 0
-  },
-  "m" : 14,
-  "graph" : "medium1.json",
-  "n" : 12,
-  "scc" : {
-    "dfs_edges" : 14,
+  "file" : "medium1.json",
+  "nodes" : 12,
+  "edges" : 12,
+  "density" : 1.0,
+  "SCC" : {
     "dfs_visits" : 12,
     "time_ms" : 0,
-    "avg_size" : 1.5,
-    "count" : 8
-  }
-}, {
-  "density" : 1.2142857142857142,
-  "topo" : {
-    "valid" : true,
-    "time_ms" : 0,
-    "pushes" : 14,
-    "pops" : 14
+    "condensed_nodes" : 8,
+    "components" : [ [ 8 ], [ 7 ], [ 6 ], [ 2, 1, 0 ], [ 11 ], [ 10 ], [ 9 ], [ 5, 4, 3 ] ],
+    "dfs_edges" : 12,
+    "component_count" : 8,
+    "avg_component_size" : 1.5
   },
-  "shortest_path" : {
-    "example" : {
-      "path" : [ 13, 9, 8, 7, 6, 3, 2, 0 ],
-      "distance" : 10
-    },
+  "Topological_Order" : {
+    "order" : [ 3, 7, 2, 6, 1, 5, 0, 4 ],
+    "push_ops" : 8,
+    "pop_ops" : 8,
     "time_ms" : 0,
-    "relaxations" : 17,
-    "reachable" : 14,
-    "avg_distance" : 4.5
+    "valid_dag" : true
   },
-  "longest_path" : {
-    "critical_path" : [ 13, 10, 8, 5, 4, 3, 1, 0 ],
-    "relaxations" : 17,
-    "critical_length" : 15,
+  "Shortest_Path" : {
+    "relax_ops" : 2,
+    "time_ms" : 0,
+    "best_distance" : 5,
+    "avg_distance" : 2.3333333333333335,
+    "best_path" : [ 2, 1, 0 ],
+    "source_component" : 2,
+    "reachable_nodes" : 3
+  },
+  "Longest_Path" : {
+    "critical_length" : 5,
+    "critical_path" : [ 2, 1, 0 ],
+    "relax_ops" : 2,
     "time_ms" : 0
-  },
-  "m" : 17,
-  "graph" : "medium2.json",
-  "n" : 14,
-  "scc" : {
-    "dfs_edges" : 17,
-    "dfs_visits" : 14,
-    "time_ms" : 0,
-    "avg_size" : 1.0,
-    "count" : 14
   }
 }, {
+  "file" : "medium2.json",
+  "nodes" : 15,
+  "edges" : 16,
   "density" : 1.0666666666666667,
-  "topo" : {
-    "valid" : true,
-    "time_ms" : 0,
-    "pushes" : 12,
-    "pops" : 12
-  },
-  "shortest_path" : {
-    "example" : {
-      "path" : [ 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 ],
-      "distance" : 16
-    },
-    "time_ms" : 0,
-    "relaxations" : 11,
-    "reachable" : 12,
-    "avg_distance" : 7.083333333333333
-  },
-  "longest_path" : {
-    "critical_path" : [ 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 ],
-    "relaxations" : 11,
-    "critical_length" : 16,
-    "time_ms" : 0
-  },
-  "m" : 16,
-  "graph" : "medium3.json",
-  "n" : 15,
-  "scc" : {
-    "dfs_edges" : 16,
+  "SCC" : {
     "dfs_visits" : 15,
     "time_ms" : 0,
-    "avg_size" : 1.25,
-    "count" : 12
+    "condensed_nodes" : 15,
+    "components" : [ [ 13 ], [ 10 ], [ 7 ], [ 4 ], [ 14 ], [ 11 ], [ 8 ], [ 5 ], [ 1 ], [ 12 ], [ 9 ], [ 6 ], [ 2 ], [ 3 ], [ 0 ] ],
+    "dfs_edges" : 16,
+    "component_count" : 15,
+    "avg_component_size" : 1.0
+  },
+  "Topological_Order" : {
+    "order" : [ 14, 8, 12, 13, 3, 7, 11, 2, 6, 10, 1, 5, 9, 0, 4 ],
+    "push_ops" : 15,
+    "pop_ops" : 15,
+    "time_ms" : 0,
+    "valid_dag" : true
+  },
+  "Shortest_Path" : {
+    "relax_ops" : 16,
+    "time_ms" : 0,
+    "best_distance" : 11,
+    "avg_distance" : 5.2,
+    "best_path" : [ 14, 12, 11, 10, 9 ],
+    "source_component" : 14,
+    "reachable_nodes" : 15
+  },
+  "Longest_Path" : {
+    "critical_length" : 11,
+    "critical_path" : [ 14, 12, 7, 6, 5, 4 ],
+    "relax_ops" : 16,
+    "time_ms" : 0
+  }
+}, {
+  "file" : "medium3.json",
+  "nodes" : 18,
+  "edges" : 18,
+  "density" : 1.0,
+  "SCC" : {
+    "dfs_visits" : 18,
+    "time_ms" : 0,
+    "condensed_nodes" : 14,
+    "components" : [ [ 8 ], [ 14 ], [ 13 ], [ 12 ], [ 7 ], [ 6 ], [ 2, 1, 0 ], [ 17 ], [ 16 ], [ 15 ], [ 11 ], [ 10 ], [ 9 ], [ 5, 4, 3 ] ],
+    "dfs_edges" : 18,
+    "component_count" : 14,
+    "avg_component_size" : 1.2857142857142858
+  },
+  "Topological_Order" : {
+    "order" : [ 6, 13, 5, 12, 4, 11, 0, 3, 10, 2, 9, 1, 8, 7 ],
+    "push_ops" : 14,
+    "pop_ops" : 14,
+    "time_ms" : 0,
+    "valid_dag" : true
+  },
+  "Shortest_Path" : {
+    "relax_ops" : 6,
+    "time_ms" : 0,
+    "best_distance" : 13,
+    "avg_distance" : 7.571428571428571,
+    "best_path" : [ 6, 5, 4, 3, 2, 1 ],
+    "source_component" : 6,
+    "reachable_nodes" : 7
+  },
+  "Longest_Path" : {
+    "critical_length" : 13,
+    "critical_path" : [ 6, 5, 4, 3, 2, 1 ],
+    "relax_ops" : 6,
+    "time_ms" : 0
   }
 } ]

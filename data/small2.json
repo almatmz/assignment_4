@@ -11,6 +11,5 @@
     {"u": 5, "v": 6, "w": 1}
   ],
   "source": 3,
-  "weight_model": "edge",
-  "meta": {"name":"small2","type":"mixed","density":"sparse","n":7,"m":7}
+  "weight_model": "edge"
 }
