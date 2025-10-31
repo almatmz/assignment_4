@@ -34,7 +34,7 @@ public class TopologicalSort {
             }
         }
         metrics.timeEnd("kahn_total");
-        if (order.size() != n) return Collections.emptyList(); // not a DAG (cycle)
+        if (order.size() != n) return Collections.emptyList();
         return order;
     }
 }
