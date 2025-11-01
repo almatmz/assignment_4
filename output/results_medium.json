@@ -4,8 +4,8 @@
   "edges" : 12,
   "density" : 1.0,
   "SCC" : {
+    "time_ns" : 38900,
     "dfs_visits" : 12,
-    "time_ms" : 0,
     "condensed_nodes" : 8,
     "components" : [ [ 8 ], [ 7 ], [ 6 ], [ 2, 1, 0 ], [ 11 ], [ 10 ], [ 9 ], [ 5, 4, 3 ] ],
     "dfs_edges" : 12,
@@ -13,15 +13,15 @@
     "avg_component_size" : 1.5
   },
   "Topological_Order" : {
-    "order" : [ 3, 7, 2, 6, 1, 5, 0, 4 ],
     "push_ops" : 8,
     "pop_ops" : 8,
-    "time_ms" : 0,
-    "valid_dag" : true
+    "time_ns" : 33500,
+    "valid_dag" : true,
+    "order" : [ 3, 7, 2, 6, 1, 5, 0, 4 ]
   },
   "Shortest_Path" : {
+    "time_ns" : 31800,
     "relax_ops" : 2,
-    "time_ms" : 0,
     "best_distance" : 5,
     "avg_distance" : 2.3333333333333335,
     "best_path" : [ 2, 1, 0 ],
@@ -29,10 +29,10 @@
     "reachable_nodes" : 3
   },
   "Longest_Path" : {
+    "time_ns" : 39500,
     "critical_length" : 5,
     "critical_path" : [ 2, 1, 0 ],
-    "relax_ops" : 2,
-    "time_ms" : 0
+    "relax_ops" : 2
   }
 }, {
   "file" : "medium2.json",
@@ -40,8 +40,8 @@
   "edges" : 16,
   "density" : 1.0666666666666667,
   "SCC" : {
+    "time_ns" : 39600,
     "dfs_visits" : 15,
-    "time_ms" : 0,
     "condensed_nodes" : 15,
     "components" : [ [ 13 ], [ 10 ], [ 7 ], [ 4 ], [ 14 ], [ 11 ], [ 8 ], [ 5 ], [ 1 ], [ 12 ], [ 9 ], [ 6 ], [ 2 ], [ 3 ], [ 0 ] ],
     "dfs_edges" : 16,
@@ -49,15 +49,15 @@
     "avg_component_size" : 1.0
   },
   "Topological_Order" : {
-    "order" : [ 14, 8, 12, 13, 3, 7, 11, 2, 6, 10, 1, 5, 9, 0, 4 ],
     "push_ops" : 15,
     "pop_ops" : 15,
-    "time_ms" : 0,
-    "valid_dag" : true
+    "time_ns" : 31100,
+    "valid_dag" : true,
+    "order" : [ 14, 8, 12, 13, 3, 7, 11, 2, 6, 10, 1, 5, 9, 0, 4 ]
   },
   "Shortest_Path" : {
+    "time_ns" : 47700,
     "relax_ops" : 16,
-    "time_ms" : 0,
     "best_distance" : 11,
     "avg_distance" : 5.2,
     "best_path" : [ 14, 12, 11, 10, 9 ],
@@ -65,10 +65,10 @@
     "reachable_nodes" : 15
   },
   "Longest_Path" : {
+    "time_ns" : 44700,
     "critical_length" : 11,
     "critical_path" : [ 14, 12, 7, 6, 5, 4 ],
-    "relax_ops" : 16,
-    "time_ms" : 0
+    "relax_ops" : 16
   }
 }, {
   "file" : "medium3.json",
@@ -76,8 +76,8 @@
   "edges" : 18,
   "density" : 1.0,
   "SCC" : {
+    "time_ns" : 47000,
     "dfs_visits" : 18,
-    "time_ms" : 0,
     "condensed_nodes" : 14,
     "components" : [ [ 8 ], [ 14 ], [ 13 ], [ 12 ], [ 7 ], [ 6 ], [ 2, 1, 0 ], [ 17 ], [ 16 ], [ 15 ], [ 11 ], [ 10 ], [ 9 ], [ 5, 4, 3 ] ],
     "dfs_edges" : 18,
@@ -85,15 +85,15 @@
     "avg_component_size" : 1.2857142857142858
   },
   "Topological_Order" : {
-    "order" : [ 6, 13, 5, 12, 4, 11, 0, 3, 10, 2, 9, 1, 8, 7 ],
     "push_ops" : 14,
     "pop_ops" : 14,
-    "time_ms" : 0,
-    "valid_dag" : true
+    "time_ns" : 59700,
+    "valid_dag" : true,
+    "order" : [ 6, 13, 5, 12, 4, 11, 0, 3, 10, 2, 9, 1, 8, 7 ]
   },
   "Shortest_Path" : {
+    "time_ns" : 41200,
     "relax_ops" : 6,
-    "time_ms" : 0,
     "best_distance" : 13,
     "avg_distance" : 7.571428571428571,
     "best_path" : [ 6, 5, 4, 3, 2, 1 ],
@@ -101,9 +101,9 @@
     "reachable_nodes" : 7
   },
   "Longest_Path" : {
+    "time_ns" : 46200,
     "critical_length" : 13,
     "critical_path" : [ 6, 5, 4, 3, 2, 1 ],
-    "relax_ops" : 6,
-    "time_ms" : 0
+    "relax_ops" : 6
   }
 } ]

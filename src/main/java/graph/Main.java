@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import graph.topo.TopologicalSort;
 
 public class Main {
 
@@ -39,32 +40,32 @@ public class Main {
             int m = countEdges(g);
             double density = (double) m / Math.max(1, n);
 
-
+            // --- SCC ---
             Metrics mSCC = new Metrics();
             long t0 = System.nanoTime();
             TarjanSCC tarjan = new TarjanSCC(g, mSCC);
             List<List<Integer>> sccs = tarjan.findSCCs();
-            long sccMs = (System.nanoTime() - t0) / 1_000_000;
+            long sccNs = System.nanoTime() - t0;
 
             int[] comp = tarjan.getComponentMapping();
             CondensationGraph cg = new CondensationGraph(g, comp);
             Graph dag = cg.build();
 
-
+            // --- Topological Sort ---
             Metrics mTopo = new Metrics();
             long t1 = System.nanoTime();
             TopologicalSort topo = new TopologicalSort(dag, mTopo);
             List<Integer> topoOrder = topo.kahn();
-            long topoMs = (System.nanoTime() - t1) / 1_000_000;
+            long topoNs = System.nanoTime() - t1;
 
-
+            // --- Shortest Path ---
             Metrics mSP = new Metrics();
             DAGShortestPath spAlg = new DAGShortestPath(dag, mSP);
             int src = (g.getSource() >= 0) ? comp[g.getSource()] : 0;
 
             long t2 = System.nanoTime();
             var sp = spAlg.run(src);
-            long spMs = (System.nanoTime() - t2) / 1_000_000;
+            long spNs = System.nanoTime() - t2;
 
             long INF = Long.MAX_VALUE / 4;
             int reachable = 0;
@@ -94,13 +95,13 @@ public class Main {
                 }
             }
 
-
+            // --- Longest Path ---
             Metrics mLP = new Metrics();
             DAGLongestPath lpAlg = new DAGLongestPath(dag, mLP);
 
             long t3 = System.nanoTime();
             var lpRes = lpAlg.runOptionalSources(Set.of(src));
-            long lpMs = (System.nanoTime() - t3) / 1_000_000;
+            long lpNs = System.nanoTime() - t3;
 
             long crit = 0;
             List<Integer> critPath = List.of();
@@ -110,7 +111,7 @@ public class Main {
                 critPath = opt2.get().nodes();
             }
 
-
+            // --- Build JSON result ---
             Map<String, Object> json = new LinkedHashMap<>();
 
             json.put("file", fname);
@@ -125,7 +126,7 @@ public class Main {
                     "condensed_nodes", dag.n(),
                     "dfs_visits", mSCC.get("dfsVisits"),
                     "dfs_edges", mSCC.get("dfsEdges"),
-                    "time_ms", sccMs
+                    "time_ns", sccNs
             ));
 
             json.put("Topological_Order", Map.of(
@@ -133,7 +134,7 @@ public class Main {
                     "valid_dag", topoOrder.size() == dag.n(),
                     "push_ops", mTopo.get("kahnPushes"),
                     "pop_ops", mTopo.get("kahnPops"),
-                    "time_ms", topoMs
+                    "time_ns", topoNs
             ));
 
             json.put("Shortest_Path", Map.of(
@@ -143,14 +144,14 @@ public class Main {
                     "best_distance", bestDistance,
                     "best_path", bestPath,
                     "relax_ops", mSP.get("relaxations"),
-                    "time_ms", spMs
+                    "time_ns", spNs
             ));
 
             json.put("Longest_Path", Map.of(
                     "critical_length", crit,
                     "critical_path", critPath,
                     "relax_ops", mLP.get("long_relaxations"),
-                    "time_ms", lpMs
+                    "time_ns", lpNs
             ));
 
             String f = fname.toLowerCase();
@@ -166,7 +167,7 @@ public class Main {
         writer.writeValue(new File(OUTPUT_DIR + "/results_medium.json"), mediumResults);
         writer.writeValue(new File(OUTPUT_DIR + "/results_large.json"), largeResults);
 
-        System.out.println("\n All results saved in /output/");
+        System.out.println("\n All results saved in /output/ .");
     }
 
     private static int countEdges(Graph g) {

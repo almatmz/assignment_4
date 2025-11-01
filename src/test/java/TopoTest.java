@@ -1,6 +1,6 @@
 import graph.Graph;
 import graph.Metrics;
-import graph.TopologicalSort;
+import graph.topo.TopologicalSort;
 import org.junit.jupiter.api.Test;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,8 +28,19 @@ public class TopoTest {
         g.addEdge(0, 1, 1);
         g.addEdge(1, 2, 1);
         g.addEdge(2, 0, 1);
+
         TopologicalSort topo = new TopologicalSort(g, new Metrics());
         List<Integer> order = topo.kahn();
+
         assertTrue(order.isEmpty(), "Cycle should produce empty topo order");
+    }
+
+    //  Edge case: empty graph
+    @Test
+    void testEmptyGraph() {
+        Graph g = new Graph(0);
+        TopologicalSort topo = new TopologicalSort(g, new Metrics());
+        List<Integer> order = topo.kahn();
+        assertTrue(order.isEmpty(), "Empty graph should return an empty topological order");
     }
 }

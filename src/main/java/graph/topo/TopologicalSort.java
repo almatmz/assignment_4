@@ -1,4 +1,7 @@
-package graph;
+package graph.topo;
+
+import graph.Graph;
+import graph.Metrics;
 
 import java.util.*;
 

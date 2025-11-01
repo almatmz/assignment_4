@@ -2,7 +2,7 @@ package graph.dagsp;
 
 import graph.Graph;
 import graph.Metrics;
-import graph.TopologicalSort;
+import graph.topo.TopologicalSort;
 
 import java.util.*;
 
