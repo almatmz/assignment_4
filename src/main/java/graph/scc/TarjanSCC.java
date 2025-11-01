@@ -5,7 +5,13 @@ import graph.Metrics;
 
 import java.util.*;
 
-
+/**
+ * Tarjan's Strongly Connected Components algorithm implementation.
+ *
+ * <p>This class computes SCCs in a directed graph in O(V + E) time.
+ * It uses DFS traversal, low-link values, and a stack to detect SCC roots.
+ * Each vertex is pushed once and popped once. Metrics are collected for analysis.</p>
+ */
 public class TarjanSCC {
     private final Graph g;
     private final Metrics metrics;
@@ -28,7 +34,11 @@ public class TarjanSCC {
         this.compOf = new int[g.n()];
         Arrays.fill(compOf, -1);
     }
-
+    /**
+     * Computes all strongly connected components.
+     *
+     * @return List of components, each as a list of vertices.
+     */
     public List<List<Integer>> findSCCs() {
         metrics.timeStart("scc_total");
         for (int v = 0; v < g.n(); v++) {
@@ -38,6 +48,10 @@ public class TarjanSCC {
         return components;
     }
 
+    /**
+     * Depth-first search for SCC; core Tarjan logic.
+     */
+
     private void strongConnect(int v) {
         indices[v] = index;
         low[v] = index;
@@ -46,6 +60,7 @@ public class TarjanSCC {
         onStack[v] = true;
         metrics.inc("dfsVisits");
 
+        // Explore neighbors
         for (Graph.Edge e : g.neighbors(v)) {
             int w = e.to;
             metrics.inc("dfsEdges");
@@ -57,6 +72,7 @@ public class TarjanSCC {
             }
         }
 
+        // If v is root of an SCC
         if (low[v] == indices[v]) {
             List<Integer> comp = new ArrayList<>();
             while (true) {

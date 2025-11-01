@@ -5,7 +5,9 @@ import graph.Metrics;
 import graph.topo.TopologicalSort;
 
 import java.util.*;
-
+/**
+ * Computes shortest paths in a DAG from a source node using topological order.
+ */
 public class DAGShortestPath {
     private final Graph dag;
     private final Metrics metrics;
@@ -14,10 +16,15 @@ public class DAGShortestPath {
         this.dag = dag;
         this.metrics = metrics;
     }
-
+    /**
+     * Runs single-source shortest path on DAG.
+     * @param source vertex
+     */
 
     public Result run(int source) {
         metrics.timeStart("dagsp_total");
+
+        // Topological order ensures each edge is relaxed once
         TopologicalSort topo = new TopologicalSort(dag, metrics);
         List<Integer> order = topo.kahn();
         int n = dag.n();
@@ -31,12 +38,13 @@ public class DAGShortestPath {
         int[] pos = new int[n];
         for (int i = 0; i < n; i++) pos[order.get(i)] = i;
 
+        // Relax edges in topo order
         for (int u : order) {
             if (dist[u] == INF) continue;
             for (Graph.Edge e : dag.neighbors(u)) {
                 int v = e.to; long w = e.weight;
                 metrics.inc("relaxations");
-                if (dist[u] + w < dist[v]) {
+                if (dist[u] + w < dist[v]) { // relax edge
                     dist[v] = dist[u] + w;
                     pre[v] = u;
                 }

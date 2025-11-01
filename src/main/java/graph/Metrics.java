@@ -3,7 +3,15 @@ package graph;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-
+/**
+ * Metrics utility to track algorithm counters and nanosecond timing.
+ * Thread-safe and lightweight; used for empirical validation and profiling.
+ *
+ * Features:
+ * - Increment & accumulate counters
+ * - Start & stop timers in nanoseconds
+ * - Human-readable output via toString()
+ */
 public class Metrics {
     private final Map<String, AtomicLong> counters = new ConcurrentHashMap<>();
     private final Map<String, AtomicLong> timers = new ConcurrentHashMap<>();

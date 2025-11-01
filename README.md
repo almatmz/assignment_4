@@ -24,7 +24,9 @@ The system is designed with modular packages, efficient metrics instrumentation,
 graph/
 ├── Graph.java                 # Core weighted directed graph
 ├── Metrics.java               # Operation counters + timers
-├── TopologicalSort.java       # Kahn/DFS topological ordering
+├──JsonGraphLoader.java        # Loads JSON
+├── topo/
+    ├──TopologicalSort.java    # Kahn/DFS topological ordering
 ├── dagsp/
 │   ├── DAGShortestPath.java   # Single-source shortest path in DAG
 │   ├── DAGLongestPath.java    # Longest/critical path via DP
@@ -41,6 +43,25 @@ All datasets are under `/data/`, grouped into:
 * `largeX.json` (20–50 nodes)
 
 ---
+
+## Algorithms Used
+
+| Task                               | Algorithm              | Complexity | Notes                          |
+| ---------------------------------- | ---------------------- | ---------- | ------------------------------ |
+| SCC Extraction                     | **Tarjan's Algorithm** | **O(V+E)** | DFS-based, stack tracking      |
+| Condensation Graph                 | Component contraction  | **O(V+E)** | DAG guaranteed                 |
+| Topological Sort                   | DFS-Topo / Kahn        | **O(V+E)** | Valid order guaranteed for DAG |
+| Single-source Shortest Path in DAG | DP + Topo order        | **O(V+E)** | Edge weights                   |
+| Critical Path (Longest Path)       | Max-DP over topo       | **O(V+E)** | Equivalent to negation/SP      |
+
+
+
+## Weight Model
+
+Weights represent task durations on edges (travel/service cost between operations).
+
+---
+
 
 ## ⚙️ Algorithms & Design Choices
 
@@ -112,24 +133,76 @@ Optional<SPPath> path = result.reconstructPath(src, tgt);
 ```java
 DAGLongestPath lp = new DAGLongestPath(dag, metrics);
 Optional<SPPath> critical = lp.runOptionalSources(null)
-                              .reconstructAnyLongest();
+        .reconstructAnyLongest();
 ```
 
 ---
 
-## 📊 Dataset Summary
+##  Dataset Summary
 
-| File         | Nodes | Edges | Density | #Components | Avg Comp. Size | DAG Valid | Best Shortest Distance | Critical Path Length |
-| ------------ | ----- | ----- | ------- | ----------- | -------------- | --------- | ---------------------- | -------------------- |
-| small1.json  | 6     | 6     | 1.0     | 6           | 1.0            | ✅         | 7                      | 9                    |
-| small2.json  | 7     | 7     | 1.0     | 5           | 1.4            | ✅         | 6                      | 6                    |
-| small3.json  | 8     | 8     | 1.0     | 5           | 1.6            | ✅         | 4                      | 4                    |
-| medium1.json | 12    | 12    | 1.0     | 8           | 1.5            | ✅         | 5                      | 5                    |
-| medium2.json | 15    | 16    | 1.07    | 15          | 1.0            | ✅         | 11                     | 11                   |
-| medium3.json | 18    | 18    | 1.0     | 14          | 1.29           | ✅         | 13                     | 13                   |
-| large1.json  | 25    | 25    | 1.0     | 25          | 1.0            | ✅         | 44                     | 44                   |
-| large2.json  | 30    | 30    | 1.0     | 24          | 1.25           | ✅         | 42                     | 42                   |
-| large3.json  | 40    | 40    | 1.0     | 38          | 1.05           | ✅         | 66                     | 66                   |
+| Category | Files | Nodes | Edge Density | Cycles |
+| -------- | ----- | ----- | ------------ | ------ |
+| Small    | 4     | 6–8   | ~1.0         | yes    |
+| Medium   | 3     | 12–18 | ~1.0         | yes    |
+| Large    | 3     | 25–40 | ~1.0         | yes    |
+
+
+All datasets contain mixed SCC structures and DAG parts.
+
+---
+
+Empirical Results
+## 1) Small Graphs (6–8 nodes)
+
+| File              |  N | SCC time (ns) | SCC count | Topo time (ns) | SP time (ns) | LP time (ns) |
+| ----------------- | -: | ------------: | --------: | -------------: | -----------: | -----------: |
+| `small1.json`     |  6 |        25,800 |         6 |         16,900 |       25,900 |       24,800 |
+| `small2.json`     |  7 |        25,300 |         5 |         17,500 |       21,000 |       22,600 |
+| `small3.json`     |  8 |        26,800 |         5 |         16,900 |       25,600 |       21,800 |
+
+
+Observation: Runtime in microsecond range — consistent with O(V+E).
+
+---
+
+## 2) Medium Graphs (12–18 nodes)
+
+| File           |  N | SCC time (ns) | SCC count | Topo time (ns) | SP time (ns) | LP time (ns) |
+| -------------- | -: | ------------: | --------: | -------------: | -----------: | -----------: |
+| `medium1.json` | 12 |        38,900 |         8 |         33,500 |       31,800 |       39,500 |
+| `medium2.json` | 15 |        39,600 |        15 |         31,100 |       47,700 |       44,700 |
+| `medium3.json` | 18 |        47,000 |        14 |         59,700 |       41,200 |       46,200 |
+
+
+Growth is still linear — doubling nodes ≈ doubling cost.
+
+---
+
+## 3) Large Graphs (25–40 nodes)
+
+| File          |  N | SCC time (ns) | SCC count | Topo time (ns) | SP time (ns) | LP time (ns) |
+| ------------- | -: | ------------: | --------: | -------------: | -----------: | -----------: |
+| `large1.json` | 25 |     5,291,200 |        25 |      1,705,900 |    2,113,900 |    2,616,800 |
+| `large2.json` | 30 |       196,300 |        24 |         64,600 |      123,800 |       95,100 |
+| `large3.json` | 40 |       120,100 |        38 |         65,700 |      118,900 |      103,200 |
+
+
+Note: First dataset spike from JVM warmup + high density worst-case.
+
+---
+
+## Practice vs Theory
+
+| Algorithm            | Theoretical | Observed                             | Match |
+| -------------------- | ----------- | ------------------------------------ | ----- |
+| Tarjan SCC           | O(V+E)      | Linear growth, spikes on first large | ✅     |
+| Condensation         | O(V+E)      | Negligible overhead                  | ✅     |
+| Topological Sort     | O(V+E)      | Stable microsecond range             | ✅     |
+| Shortest Path in DAG | O(V+E)      | Linear scaling                       | ✅     |
+| Longest Path in DAG  | O(V+E)      | Mirrors SP complexity                | ✅     |
+
+---
+
 
 🧾 **Observations**
 
@@ -155,8 +228,8 @@ Example metrics from `medium2.json`:
 ```
 SCC: dfs_visits=15, dfs_edges=16
 Topo: push_ops=15, pop_ops=15
-Shortest Path: relax_ops=16, time=0ms
-Longest Path: relax_ops=16, time=0ms
+Shortest Path: relax_ops=16, time=47700ns
+Longest Path: relax_ops=16, time=44700ns
 ```
 
 ---
@@ -167,14 +240,12 @@ Longest Path: relax_ops=16, time=0ms
 
 ```bash
 # Clone repository
-git clone https://github.com/<your-username>/SmartCityGraphScheduler.git
-cd SmartCityGraphScheduler
+git clone https://github.com/almatmz/assignment_4.git
+cd smart_scheduling
 
 # Compile
 mvn clean install
 
-# Run main tests
-java -jar target/SmartCityGraphScheduler.jar
 ```
 
 ### 🧪 JUnit Tests

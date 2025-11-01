@@ -6,17 +6,41 @@ import graph.topo.TopologicalSort;
 
 import java.util.*;
 
+/**
+ * Computes longest paths in a Directed Acyclic Graph (DAG).
+ * <p>
+ * Uses topological ordering and dynamic programming to relax edges and
+ * accumulate maximum distances from a given set of sources.
+ */
+
 public class DAGLongestPath {
     private final Graph dag;
     private final Metrics metrics;
+
+    /**
+     * Constructs a longest-path solver for a DAG.
+     *
+     * @param dag the directed acyclic graph
+     * @param metrics metrics collector for performance analysis
+     */
 
     public DAGLongestPath(Graph dag, Metrics metrics) {
         this.dag = dag;
         this.metrics = metrics;
     }
+    /**
+     * Runs longest-path computation with optional source nodes.
+     * If no sources provided, nodes with no incoming edges act as sources.
+     *
+     * @param sources set of starting nodes or null
+     * @return result object containing distances and predecessor pointers
+     */
 
     public Result runOptionalSources(Set<Integer> sources) {
+        // Start total execution timer
         metrics.timeStart("daglong_total");
+
+        // Compute topological order
         TopologicalSort topo = new TopologicalSort(dag, metrics);
         List<Integer> order = topo.kahn();
         int n = dag.n();
@@ -52,6 +76,11 @@ public class DAGLongestPath {
         public final long[] dist;
         public final int[] pre;
         public Result(long[] dist, int[] pre) { this.dist = dist; this.pre = pre; }
+        /**
+         * Reconstructs any longest path found in the DAG.
+         *
+         * @return optional containing path and its length
+         */
 
         public Optional<SPPath> reconstructAnyLongest() {
             int n = dist.length;

@@ -2,11 +2,15 @@ package graph.scc;
 
 import graph.Graph;
 import java.util.*;
-
+/**
+ * Builds the condensation graph (SCC DAG) from component mapping produced by TarjanSCC.
+ * Each SCC becomes a single vertex; edges are compressed and minimum edge weight kept.
+ */
 public class CondensationGraph {
     private final Graph original;
     private final int[] compOf;
     private final int compCount;
+    // For each component, store best (minimum-weight) outgoing edges to other components
     private final List<Map<Integer, Long>> compAdj;
 
     public CondensationGraph(Graph original, int[] compOf) {
@@ -17,7 +21,11 @@ public class CondensationGraph {
         for (int i = 0; i < compCount; i++) compAdj.add(new HashMap<>());
     }
 
-
+    /**
+     * Builds and returns a DAG where each node is an SCC and edges represent compressed SCC edges.
+     *
+     * @return Directed Acyclic Graph of SCCs
+     */
     public Graph build() {
         Graph dag = new Graph(compCount);
         for (int u = 0; u < original.n(); u++) {
