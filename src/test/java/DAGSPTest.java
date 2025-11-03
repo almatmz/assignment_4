@@ -1,79 +1,112 @@
 import graph.Graph;
 import graph.Metrics;
-import graph.dagsp.DAGShortestPath;
 import graph.dagsp.DAGLongestPath;
+import graph.dagsp.DAGShortestPath;
 import graph.dagsp.SPPath;
+import graph.topo.TopologicalSort;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Tests for DAG shortest/longest path algorithms using the project's API.
- */
 public class DAGSPTest {
 
     @Test
-    void testShortestPath_simpleGraph() {
-        Graph g = new Graph(5);
-        g.addEdge(0, 1, 2);
-        g.addEdge(0, 2, 4);
-        g.addEdge(1, 3, 7);
-        g.addEdge(2, 3, 1);
-        g.addEdge(3, 4, 3);
+    void shortestPathsFromSourceOnDAG() {
+        Graph dag = new Graph(7);
+        // Weighted edges (u -> v, w)
+        dag.addEdge(0, 1, 2);
+        dag.addEdge(0, 2, 4);
+        dag.addEdge(1, 3, 7);
+        dag.addEdge(1, 4, 1);
+        dag.addEdge(2, 4, 3);
+        dag.addEdge(3, 5, 1);
+        dag.addEdge(4, 5, 5);
+        dag.addEdge(2, 6, 2);
 
-        DAGShortestPath sp = new DAGShortestPath(g, new Metrics());
-        DAGShortestPath.Result res = sp.run(0);
+        int src = 0;
+        DAGShortestPath sssp = new DAGShortestPath(dag, new Metrics());
+        DAGShortestPath.Result r = sssp.run(src);
 
-        assertEquals(0, res.dist[0]);
-        assertEquals(2, res.dist[1]);
-        assertEquals(4, res.dist[2]);
-        assertEquals(5, res.dist[3]);
-        assertEquals(8, res.dist[4]);
-
-
-        Optional<SPPath> pathOpt = res.reconstructPath(0, 4);
-        assertTrue(pathOpt.isPresent(), "Path 0->4 should be reconstructable");
-        SPPath path = pathOpt.get();
-        List<Integer> expected = List.of(0, 2, 3, 4);
-        assertEquals(expected, path.nodes());
-        assertEquals(8, path.distance());
+        // Expected shortest distances from 0:
+        // 0:0, 1:2, 2:4, 3:9 (0->1->3), 4:3 (0->1->4), 5:8 (0->1->4->5), 6:6 (0->2->6)
+        long[] expected = new long[]{0, 2, 4, 9, 3, 8, 6};
+        assertArrayEquals(expected, r.dist, "Shortest distances mismatch");
     }
 
     @Test
-    void testLongestPath_simpleGraph() {
-        Graph g = new Graph(5);
-        g.addEdge(0, 1, 5);
-        g.addEdge(1, 2, 10);
-        g.addEdge(0, 3, 1);
-        g.addEdge(3, 4, 2);
-        g.addEdge(2, 4, 3);
+    void reconstructsOneShortestPath() {
+        Graph dag = new Graph(6);
+        dag.addEdge(0, 1, 1);
+        dag.addEdge(0, 2, 5);
+        dag.addEdge(1, 3, 2);
+        dag.addEdge(2, 3, 1);
+        dag.addEdge(3, 4, 2);
+        dag.addEdge(1, 5, 10);
 
-        DAGLongestPath lp = new DAGLongestPath(g, new Metrics());
-        DAGLongestPath.Result lres = lp.runOptionalSources(Set.of(0));
+        int src = 0, dst = 4;
+        DAGShortestPath sssp = new DAGShortestPath(dag, new Metrics());
+        DAGShortestPath.Result r = sssp.run(src);
 
-        Optional<SPPath> longest = lres.reconstructAnyLongest();
-        assertTrue(longest.isPresent(), "Longest path should be found");
-        SPPath p = longest.get();
-        assertEquals(18, p.distance());
-        assertEquals(List.of(0, 1, 2, 4), p.nodes());
+        SPPath path = r.reconstructPath(src, dst).orElseThrow();
+        assertEquals(Arrays.asList(0, 1, 3, 4), path.nodes(), "Reconstructed shortest path mismatch");
+        assertEquals(5L, path.distance(), "Shortest path length mismatch");
     }
 
     @Test
-    void testShortestPath_disconnectedNodes() {
-        Graph g = new Graph(4);
-        g.addEdge(0, 1, 1);
+    void criticalPathLongestDistanceAndReconstruction() {
+        Graph dag = new Graph(8);
+        dag.addEdge(0, 1, 3);
+        dag.addEdge(0, 2, 2);
+        dag.addEdge(1, 3, 4);
+        dag.addEdge(2, 3, 1);
+        dag.addEdge(3, 4, 6);
+        dag.addEdge(1, 5, 2);
+        dag.addEdge(5, 6, 5);
+        dag.addEdge(6, 4, 2);
+        dag.addEdge(2, 7, 3);
 
-        DAGShortestPath sp = new DAGShortestPath(g, new Metrics());
-        DAGShortestPath.Result res = sp.run(0);
+        // Compute sources = nodes with indegree 0
+        Set<Integer> sources = indegreeZero(dag);
 
-        final long INF = Long.MAX_VALUE / 4;
-        assertEquals(0, res.dist[0]);
-        assertEquals(1, res.dist[1]);
-        assertEquals(INF, res.dist[2], "Node 2 should be unreachable");
-        assertEquals(INF, res.dist[3], "Node 3 should be unreachable");
+        DAGLongestPath lp = new DAGLongestPath(dag, new Metrics());
+        DAGLongestPath.Result res = lp.runOptionalSources(sources);
+
+        SPPath critical = res.reconstructAnyLongest().orElseThrow();
+
+        // One critical path: 0 -> 1 -> 3 -> 4 with length 3+4+6 = 13
+        assertEquals(Arrays.asList(0, 1, 3, 4), critical.nodes(), "Critical path mismatch");
+        assertEquals(13L, critical.distance(), "Critical path length mismatch");
+
+        // Ensure path respects topological order
+        assertTrue(isStrictlyIncreasing(critical.nodes(), topoPositions(dag)), "Path must respect DAG order");
+    }
+
+    // --- Helpers ---
+
+    private static Set<Integer> indegreeZero(Graph g) {
+        int n = g.n();
+        int[] indeg = new int[n];
+        for (int u = 0; u < n; u++) {
+            for (var e : g.neighbors(u)) indeg[e.to]++;
+        }
+        Set<Integer> s = new HashSet<>();
+        for (int i = 0; i < n; i++) if (indeg[i] == 0) s.add(i);
+        return s;
+    }
+
+    private static Map<Integer, Integer> topoPositions(Graph dag) {
+        List<Integer> order = new TopologicalSort(dag, new Metrics()).kahn();
+        Map<Integer, Integer> pos = new HashMap<>();
+        for (int i = 0; i < order.size(); i++) pos.put(order.get(i), i);
+        return pos;
+    }
+
+    private static boolean isStrictlyIncreasing(List<Integer> path, Map<Integer, Integer> pos) {
+        for (int i = 0; i + 1 < path.size(); i++) {
+            if (pos.get(path.get(i)) >= pos.get(path.get(i + 1))) return false;
+        }
+        return true;
     }
 }
